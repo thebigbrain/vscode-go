@@ -1704,17 +1704,15 @@ export class GoDebugSession extends LoggingDebugSession {
 		if (vari.kind === GoReflectKind.Array || vari.kind === GoReflectKind.Slice) {
 			variablesPromise = Promise.all(
 				vari.children.map((v, i) => {
-					return loadChildren(`*(*"${v.type}")(${v.addr})`, v).then(
-						(): DebugProtocol.Variable => {
-							const { result, variablesReference } = this.convertDebugVariableToProtocolVariable(v);
-							return {
-								name: '[' + i + ']',
-								value: result,
-								evaluateName: vari.fullyQualifiedName + '[' + i + ']',
-								variablesReference
-							};
-						}
-					);
+					return loadChildren(`*(*"${v.type}")(${v.addr})`, v).then((): DebugProtocol.Variable => {
+						const { result, variablesReference } = this.convertDebugVariableToProtocolVariable(v);
+						return {
+							name: '[' + i + ']',
+							value: result,
+							evaluateName: vari.fullyQualifiedName + '[' + i + ']',
+							variablesReference
+						};
+					});
 				})
 			);
 		} else if (vari.kind === GoReflectKind.Map) {
@@ -1743,18 +1741,16 @@ export class GoDebugSession extends LoggingDebugSession {
 		} else {
 			variablesPromise = Promise.all(
 				vari.children.map((v) => {
-					return loadChildren(`*(*"${v.type}")(${v.addr})`, v).then(
-						(): DebugProtocol.Variable => {
-							const { result, variablesReference } = this.convertDebugVariableToProtocolVariable(v);
+					return loadChildren(`*(*"${v.type}")(${v.addr})`, v).then((): DebugProtocol.Variable => {
+						const { result, variablesReference } = this.convertDebugVariableToProtocolVariable(v);
 
-							return {
-								name: v.name,
-								value: result,
-								evaluateName: v.fullyQualifiedName,
-								variablesReference
-							};
-						}
-					);
+						return {
+							name: v.name,
+							value: result,
+							evaluateName: v.fullyQualifiedName,
+							variablesReference
+						};
+					});
 				})
 			);
 		}

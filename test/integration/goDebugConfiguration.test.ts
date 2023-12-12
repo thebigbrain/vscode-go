@@ -222,8 +222,10 @@ suite('Debug Configuration Merge User Settings', () => {
 
 	suite("merge 'go' config from settings.json", () => {
 		test('default settings are applied', async () => {
-			const defaultConfig = vscode.extensions.getExtension(extensionId)?.packageJSON.contributes.configuration
-				.properties['go.delveConfig'].properties;
+			const defaultConfig =
+				vscode.extensions.getExtension(extensionId)?.packageJSON.contributes.configuration.properties[
+					'go.delveConfig'
+				].properties;
 
 			// Run resolveDebugConfiguration with the default workspace settings.
 			const cfg1 = {
@@ -722,12 +724,8 @@ suite('Debug Configuration Converts Relative Paths', () => {
 			name: 'test',
 			index: 0
 		};
-		const {
-			program,
-			cwd,
-			output,
-			__buildDir
-		} = debugConfigProvider.resolveDebugConfigurationWithSubstitutedVariables(workspaceFolder, config)!;
+		const { program, cwd, output, __buildDir } =
+			debugConfigProvider.resolveDebugConfigurationWithSubstitutedVariables(workspaceFolder, config)!;
 		assert.deepStrictEqual(
 			{ program, cwd, output, __buildDir },
 			{
@@ -826,12 +824,8 @@ suite('Debug Configuration Converts Relative Paths', () => {
 			name: 'test',
 			index: 0
 		};
-		const {
-			program,
-			cwd,
-			output,
-			__buildDir
-		} = debugConfigProvider.resolveDebugConfigurationWithSubstitutedVariables(workspaceFolder, config)!;
+		const { program, cwd, output, __buildDir } =
+			debugConfigProvider.resolveDebugConfigurationWithSubstitutedVariables(workspaceFolder, config)!;
 		assert.deepStrictEqual(
 			{ program, cwd, output, __buildDir },
 			{
@@ -846,12 +840,8 @@ suite('Debug Configuration Converts Relative Paths', () => {
 	test('relative paths with no workspace root are not expanded', () => {
 		const config = debugConfig('dlv-dap');
 		config.program = '.'; // the program must be a valid directory or .go file.
-		const {
-			program,
-			cwd,
-			output,
-			__buildDir
-		} = debugConfigProvider.resolveDebugConfigurationWithSubstitutedVariables(undefined, config)!;
+		const { program, cwd, output, __buildDir } =
+			debugConfigProvider.resolveDebugConfigurationWithSubstitutedVariables(undefined, config)!;
 		assert.deepStrictEqual(
 			{ program, cwd, output, __buildDir },
 			{

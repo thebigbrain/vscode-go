@@ -169,8 +169,10 @@ export class GoDebugConfigurationProvider implements vscode.DebugConfigurationPr
 
 		const goConfig = getGoConfig(folder && folder.uri);
 		const dlvConfig = goConfig['delveConfig'];
-		const defaultConfig = vscode.extensions.getExtension(extensionId)?.packageJSON.contributes.configuration
-			.properties['go.delveConfig'].properties;
+		const defaultConfig =
+			vscode.extensions.getExtension(extensionId)?.packageJSON.contributes.configuration.properties[
+				'go.delveConfig'
+			].properties;
 
 		// Figure out which debugAdapter is being used first, so we can use this to send warnings
 		// for properties that don't apply.
@@ -535,9 +537,11 @@ export async function maybeJoinFlags(dlvToolPath: string, flags: string | string
 }
 
 // parseDebugProgramArgSync parses program arg of debug/auto/test launch requests.
-export function parseDebugProgramArgSync(
-	program: string
-): { program: string; dirname: string; programIsDirectory: boolean } {
+export function parseDebugProgramArgSync(program: string): {
+	program: string;
+	dirname: string;
+	programIsDirectory: boolean;
+} {
 	if (!program) {
 		throw new Error('The program attribute is missing in the debug configuration in launch.json');
 	}
